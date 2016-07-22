@@ -1,0 +1,40 @@
+#!/usr/bin/env node
+
+var resolve = require( 'resolve' );
+
+process.title = 'es-migrate';
+
+if ( process.argv.indexOf( '--verbose' ) !== -1 || process.argv.indexOf( '-v' ) !== -1 ) {
+	global.verbose = true;
+}
+
+//console.log("Hello world!");
+
+resolve(
+	'es-migrate', 
+	{
+		basedir: process.cwd()
+	},
+	function ( error, localModule ) {
+		var EsMigrate, esmigrate;
+		
+		if ( error ) {
+		  EsMigrate = require( '../' );
+		}
+		else {
+		  EsMigrate = require( localModule );
+		  log.verbose( 'Detected and using the projects local version of es-migrate. ' +
+			'\'' + localModule + '\'');
+		}
+
+		if ( typeof( EsMigrate.getInstance ) !== 'function' ) {
+		  EsMigrate = require( '../' );
+
+		  log.warn( 'Using global instead of local detected version as you have a ' +
+			'version older than 0.10.0 in your projects package.json!' );
+		}
+
+		esmigrate = EsMigrate.getInstance();
+		esmigrate.run();
+	} 
+);
