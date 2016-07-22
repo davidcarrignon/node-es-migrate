@@ -1,22 +1,24 @@
 {
-	"name": "es-migrate",
-	 "description": "ElasticSearch Database migration framework for node.js",
-	 "bin": "./bin/es-migrate",
-	 "main": "index.js",
-	 "keywords": [
-		"database",
-		"db"
-	],
-	"version": "0.0.1-beta.1",
-	"engines": {
-		"node": ">=0.6.3"
-	},
-	"license": "MIT",
-	"dependencies": {
-	},
-	"devDependencies": {
-	},
-	"scripts": {
-		"test": "node node_modules/.bin/vows"
-	}
+  "name": "es-migrate",
+  "description": "ElasticSearch Database migration framework for node.js",
+  "bin": "./bin/es-migrate",
+  "main": "index.js",
+  "keywords": [
+    "database",
+    "db"
+  ],
+  "version": "0.0.1-beta.1",
+  "engines": {
+    "node": ">=0.6.3"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "resolve": "^1.1.7"
+  },
+  "devDependencies": {
+    "yargs": "^4.8.1"
+  },
+  "scripts": {
+    "test": "node node_modules/.bin/vows"
+  }
 }
