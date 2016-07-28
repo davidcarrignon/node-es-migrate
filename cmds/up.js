@@ -24,5 +24,5 @@ exports.handler = function (argv) {
   console.log("START UPGRADE !!!");
   
   var m = new Migrator();
-  m.up(argv.host, agrv.apiVersion, argv.path);
+  m.up(argv.host, argv.apiVersion, argv.path);
 }

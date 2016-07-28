@@ -3,7 +3,7 @@ var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
 var elasticsearch = require('elasticsearch');
-var LogsRepository = require('LogsRepository');
+var LogsRepository = require('./LogsRepository');
 
 
 function Migrator() {	
@@ -23,13 +23,15 @@ Migrator.prototype = {
 			
 			if (!alreadyRunned) {
 				console.log("Running " + file);
-				var data = fs.readFileSync(file);
+				var data = fs.readFileSync(file,{encoding:'utf8'});
 				//var filemodule = require(file);
 				//filemodule.up(client, function () {});
 				
+				console.log(data);
+				
 				// try run
 				// save in es result. 
-				repository.save("1.0", file, data);
+				repository.save("1.0", file, data, function(e, r) {});
 			} else {
 				console.log("Skipped " + file);
 			}
@@ -44,22 +46,22 @@ Migrator.prototype = {
 		}, function (error, response) {
 		  // ...
 		});
-	}
+	},
 	
 	getFiles: function(filesPath) {
-		filePath = path.resolve(filePath);
+		filesPath = path.resolve(filesPath);
 		
-		var stats = fs.statSync(filePath);
+		var stats = fs.statSync(filesPath);
 		var files;
 		
 		if (stats.isDirectory()) {
-			files = this.getDirFiles(filePath);
+			files = this.getDirFiles(filesPath);
 		} else {
-			files = [ filePath ];
+			files = [ filesPath ];
 		}
 		
 		return files;
-	}
+	},
 	
 	getDirFiles: function(dir, filelist) {
 		_this = this;

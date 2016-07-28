@@ -7,7 +7,7 @@ function LogsRepository(client) {
 	this.client = client;
 }
 
-MigratorLogRepository.prototype = {
+LogsRepository.prototype = {
 	get: function(file, callback) {
 		var hash = sha1(file);
 		var client = this.client;
@@ -21,7 +21,7 @@ MigratorLogRepository.prototype = {
 			}			
 			callback();
 		});
-	}
+	},
 	
 	save: function(version, scriptPath, scriptContent, callback) {
 		var hash = sha1(scriptPath);
@@ -31,13 +31,13 @@ MigratorLogRepository.prototype = {
 		  type: this.type,
 		  id: hash,
 		  body: {
-		    @timestamp: new Date(),
+		    '@timestamp': new Date(),
 			version: version,
 			scriptPath: scriptPath,
 			scriptContent: scriptContent,			
 		  }
 		}, function (error, response) {
-			callback(); 
+			callback(error, response); 
 		});
 	},
 	
@@ -49,14 +49,14 @@ MigratorLogRepository.prototype = {
 		  type: this.errorType,
 		  id: hash,
 		  body: {
-		    @timestamp: new Date(),
+		    '@timestamp': new Date(),
 			version: version,
 			scriptPath: scriptPath,
 			scriptContent: scriptContent,			
 			errorMessage: errorMessage,
 		  }
 		}, function (error, response) {
-			callback(); 
+			callback(error, response); 
 		});
 	},
 }
